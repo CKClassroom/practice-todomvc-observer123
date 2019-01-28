@@ -4,7 +4,9 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class TodosServiceService {
-
+  todoTitle = 'todomvc';
+  todoPlaceHolder = 'What needs to be done?';
+  newTodo = '';
   todos: Todo[] = [];
   maxId: number = this.todos.length;
   filterCondition: 'all' | 'completed' | 'active' = 'all';
@@ -14,10 +16,10 @@ export class TodosServiceService {
 
   constructor() { }
 
-  addTodo(newTodo: string) {
+  addTodo() {
     this.todos = [...this.todos ,  {
       id: ++this.maxId,
-      item: newTodo,
+      item: this.newTodo,
       isCompleted: false,
       isEditing: false
     }];
@@ -41,8 +43,10 @@ export class TodosServiceService {
     });
   }
 
-  toggleAllCompleteStatus(isCompletedStatus: boolean) {
+  toggleAllCompleteStatus(isCompletedStatus: boolean): boolean {
+    isCompletedStatus = !isCompletedStatus;
     this.todos = this.todos.map(todo => ({ ...todo, isCompleted: isCompletedStatus }));
+    return isCompletedStatus;
   }
 
   clearCompletes() {
