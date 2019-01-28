@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
 
+export interface Todo {
+  id: number;
+  item: string;
+  isCompleted: boolean;
+  isEditing: boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,16 +23,17 @@ export class TodosServiceService {
 
   constructor() { }
 
-  addTodo() {
+  addTodo(inputElement: HTMLInputElement): void {
     this.todos = [...this.todos ,  {
       id: ++this.maxId,
       item: this.newTodo,
       isCompleted: false,
       isEditing: false
     }];
+    inputElement.value = '';
   }
 
-  removeTodo(todoIndex: number) {
+  removeTodo(todoIndex: number): void {
     // this.todos.splice(todoIndex, 1);
 
     this.todos = this.todos.map(_todo => {
@@ -34,7 +42,7 @@ export class TodosServiceService {
       }
     });
   }
-  toggleComplete(todo: Todo) {
+  toggleComplete(todo: Todo): void {
     this.todos = this.todos.map(_todo => {
       if (_todo.id === todo.id) {
         _todo.isCompleted = !_todo.isCompleted;
@@ -49,15 +57,11 @@ export class TodosServiceService {
     return isCompletedStatus;
   }
 
-  clearCompletes() {
+  clearCompletes(): void {
     this.todos = this.todos.filter(item => item.isCompleted === false);
   }
-}
 
-export interface Todo {
-  id: number;
-  item: string;
-  isCompleted: boolean;
-  isEditing: boolean;
+  setTodoEditing(todo: Todo): void {
+    todo.isEditing = true;
+  }
 }
-

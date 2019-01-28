@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TodosServiceService } from './todos-service.service';
+import { TodosServiceService, Todo } from './todos-service.service';
 
 @Component({
   selector: 'app-root',
@@ -12,21 +12,29 @@ export class AppComponent {
 
   title = this.todoService.todoTitle;
   newPlaceHolder = this.todoService.todoPlaceHolder;
-
   newTodo: string = this.todoService.newTodo;
-
   allChecked = false;
+  todos = this.todoService.todos;
+  filterCondition = this.todoService.filterCondition;
 
-  addTodo() {
-    this.todoService.addTodo();
+  addTodo(inputElement: HTMLInputElement): void {
+    this.todoService.addTodo(inputElement);
   }
 
-  toggleAllCompleted() {
+  toggleAllCompleted(): void {
     this.allChecked = this.todoService.toggleAllCompleteStatus(this.allChecked);
   }
 
-  
+  toggleCompleted(todo: Todo): void {
+    this.todoService.toggleComplete(todo);
+  }
 
+  setTodoEditing(todo: Todo): void {
+    this.todoService.setTodoEditing(todo);
+  }
 
+  removeTodo(itemIndex: number): void {
+    this.todoService.removeTodo(itemIndex);
+  }
 
 }
