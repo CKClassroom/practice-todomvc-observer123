@@ -12,12 +12,13 @@ export class AppComponent {
 
   title = this.todoService.todoTitle;
   newPlaceHolder = this.todoService.todoPlaceHolder;
-  newTodo: string = this.todoService.newTodo;
+  newTodo = '';
   allChecked = false;
   todos = this.todoService.todos;
   filterCondition = this.todoService.filterCondition;
 
   addTodo(inputElement: HTMLInputElement): void {
+    this.todoService.newTodo = this.newTodo;
     this.todoService.addTodo(inputElement);
   }
 
